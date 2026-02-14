@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Gift 💝</title>
+
+<style>
+body{
+    margin:0;
+    font-family:"Kanit",sans-serif;
+    background:linear-gradient(135deg,#a855f7,#ec4899,#f472b6);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    overflow:hidden;
+}
+
+/* ⭐ ดาวพื้นหลัง */
+.star{
+    position:fixed;
+    color:white;
+    animation:twinkle 2s infinite alternate;
+    pointer-events:none;
+}
+
+@keyframes twinkle{
+    from{opacity:0.2; transform:scale(0.8);}
+    to{opacity:1; transform:scale(1.3);}
+}
+
+/* การ์ด */
+.card{
+    background:rgba(255,255,255,0.15);
+    padding:35px;
+    border-radius:25px;
+    backdrop-filter:blur(15px);
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    max-width:400px;
+    position:relative;
+    z-index:2;
+}
+
+/* ปุ่ม */
+button{
+    margin-top:12px;
+    padding:12px 25px;
+    border:none;
+    border-radius:25px;
+    background:#db2777;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.quiz{
+    display:none;
+    margin-top:15px;
+    padding:15px;
+    background:rgba(255,255,255,0.95);
+    border-radius:15px;
+    color:#7e22ce;
+}
+
+input{
+    margin:5px 0;
+    padding:10px;
+    border-radius:10px;
+    border:2px solid #f0abfc;
+    width:85%;
+    text-align:center;
+}
+
+/* 🎥 วิดีโอ */
+video{
+    width:100%;
+    border-radius:15px;
+    margin-top:15px;
+    display:none;
+}
+
+/* 💖 หัวใจลอย */
+.heart{
+    position:fixed;
+    bottom:-20px;
+    font-size:20px;
+    animation:floatUp linear forwards;
+    pointer-events:none;
+}
+
+@keyframes floatUp{
+    to{
+        transform:translateY(-110vh) scale(1.8);
+        opacity:0;
+    }
+}
+
+/* 🎆 พลุยิง */
+.rocket{
+    position:fixed;
+    bottom:0;
+    width:4px;
+    height:20px;
+    background:white;
+    animation:shoot 1s linear forwards;
+}
+
+@keyframes shoot{
+    to{
+        transform:translateY(-80vh);
+        opacity:0;
+    }
+}
+
+.firework{
+    position:fixed;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    animation:explode 1s ease-out forwards;
+}
+
+@keyframes explode{
+    to{
+        transform:scale(8);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Happy Valentine 💖</h1>
+<p>ทายซิข้างใมีอะไรเอ่ย ?? 🎁</p>
+
+<button onclick="openQuiz()">บูมรักพิงค์ 💝</button>
+
+<div class="quiz" id="quizBox">
+<p>ตอบคำถามให้ถูกก่อนนะ 😘</p>
+
+<input id="q1" placeholder="เราคบกันวันไหน?"><br>
+<input id="q2" placeholder="เราคบกันได้กี่ปีเเล้ว"><br>
+<input id="q3" placeholder="เธอรักฉันมั้ย?"><br>
+
+<button onclick="checkAnswer()">ส่งคำตอบ ❤️</button>
+</div>
+
+<!-- 🎥 วิดีโอแทนรูป -->
+<video id="loveVideo" controls loop autoplay>
+<source src="Bp.mp4" type="video/mp4">
+</video>
+
+<p id="loveText" style="display:none;">
+ฉันรักเธอ ในทุกๆวัน 💕<br>
+สำหรับฉัน ทุกวันคือวันพิเศษ เพราะมีเธออยู่ข้างๆ
+</p>
+
+</div>
+
+<audio id="bgMusic" loop>
+<source src="Pp.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* เปิดคำถาม */
+function openQuiz(){
+document.getElementById("quizBox").style.display="block";
+}
+
+/* ตรวจคำตอบ */
+function checkAnswer(){
+
+let a1 = q1.value.trim();
+let a2 = q2.value.trim();
+let a3 = q3.value.trim();
+
+if(
+a1 === "12 กรกฎาคม 2565" &&
+a2 === "3 ปี 7 เดือน" &&
+(a3 === "รัก" || a3 === "รักมาก")
+){
+showGift();
+startFireworks();
+}else{
+alert("ตอบผิดน้า 💔");
+}
+}
+
+/* แสดงของขวัญ */
+function showGift(){
+
+quizBox.style.display="none";
+
+loveVideo.style.display="block";
+loveVideo.play();
+
+loveText.style.display="block";
+
+bgMusic.play();
+}
+
+/* 💖 หัวใจลอยตลอด */
+function floatingHeart(){
+
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="💖";
+
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=(20+Math.random()*25)+"px";
+h.style.animationDuration=(4+Math.random()*3)+"s";
+
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),7000);
+}
+setInterval(floatingHeart,900);
+
+/* ⭐ ดาวพื้นหลัง */
+function createStar(){
+
+let s=document.createElement("div");
+s.className="star";
+s.innerHTML="⭐";
+
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+s.style.fontSize=(10+Math.random()*20)+"px";
+
+document.body.appendChild(s);
+}
+for(let i=0;i<60;i++) createStar();
+
+/* 🎆 พลุยิงจากล่าง */
+function startFireworks(){
+
+for(let i=0;i<10;i++){
+setTimeout(()=>shootFirework(),i*300);
+}
+}
+
+function shootFirework(){
+
+let r=document.createElement("div");
+r.className="rocket";
+
+r.style.left=Math.random()*100+"vw";
+document.body.appendChild(r);
+
+setTimeout(()=>{
+explode(r.style.left);
+r.remove();
+},1000);
+}
+
+function explode(left){
+
+for(let i=0;i<20;i++){
+
+let f=document.createElement("div");
+f.className="firework";
+
+f.style.left=left;
+f.style.top=Math.random()*50+"vh";
+f.style.background="hsl("+Math.random()*360+",100%,60%)";
+
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),1000);
+}
+}
+
+</script>
+</body>
+</html>
+
+
